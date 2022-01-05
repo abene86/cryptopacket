@@ -1,0 +1,49 @@
+header{
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: beige;
+    height: 55px;
+    box-shadow: 0px 0px 10px 0px;
+   
+}
+.maintitle{
+    text-align:center;
+    align-items: center;
+    font-size:50px;
+    font-family:"shizuru";
+}
+.boxInside{
+    border: solid black 1px;
+    display: flex;
+    align-items:center;
+    justify-content: space-around;
+    width:100px;
+    height:100px;
+}
+main{
+    display:grid;
+    justify-content: center;
+}
+.holdMainContent{
+    border: solid black 1px;
+    margin-top:10px;
+    display:flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 800px;
+}
+hr{
+    margin-top:0px;
+}
+.titleOne{
+    margin-right: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family:"shizuru";
+}
+body{
+    margin-top:0px;
+    margin-right:0px;
+    margin-left:0px;
+}
