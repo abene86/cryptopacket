@@ -34,7 +34,6 @@ header{
     box-shadow: 0px 2px 3px 0px;
     width:100px;
     height:100px;
-    background-color: green;
 }
 .iconImage{
     margin-top: 10px;
@@ -47,7 +46,6 @@ main{
     margin-top: 0px;
     text-align: center;
     font-family:"Playfair display";
-    font-weight: bold;
     color: black;
     text-decoration: none;
     padding:40px;

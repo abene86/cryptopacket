@@ -17,7 +17,7 @@ var main=function(){
 
 $(document).ready(main);
 //creates the boxes
-// var colorInnerBoxes= function(){
+//  var colorInnerBoxes= function(){
 
 // };
 var populate=function(){
@@ -26,7 +26,7 @@ var populate=function(){
         var image=$("<img>").addClass("iconImage");
         var  $a=$("<a>").addClass("tickerText");
         $a.attr("href", "index2.html");
-        $a.text();
+        $a.text("Eth");
         divObjects[i].append($a);
     }  
 };
