@@ -14,18 +14,21 @@ var main=function(){
  populate();
 
 };
+
 $(document).ready(main);
 //creates the boxes
+// var colorInnerBoxes= function(){
+
+// };
 var populate=function(){
    var i;
-   for(i=0; i<divObjects.length; i++){
+    for(i=0; i<divObjects.length; i++){
         var image=$("<img>").addClass("iconImage");
-        var  ticker=$("<p>").addClass("tickerText");
-        image.attr("src", "https://cryptoicons.org/api/icon/eth/50");
-    //    divObjects[i].append(image);
-       ticker.text("eth");
-       divObjects[i].append(ticker);
-   }
+        var  $a=$("<a>").addClass("tickerText");
+        $a.attr("href", "index2.html");
+        $a.text();
+        divObjects[i].append($a);
+    }  
 };
 var createBoxes=function(number){
     var div1;

@@ -27,12 +27,14 @@ header{
     display: grid;
     align-items:center;
     justify-content: space-around;
+    opacity: 85%;
     /* border-top-right-radius: 10px;
     border-bottom-right-radius: 30px; */
     border-radius:12px;
     box-shadow: 0px 2px 3px 0px;
     width:100px;
     height:100px;
+    background-color: green;
 }
 .iconImage{
     margin-top: 10px;
@@ -45,6 +47,10 @@ main{
     margin-top: 0px;
     text-align: center;
     font-family:"Playfair display";
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    padding:40px;
 
 }
 .holdMainContent{
