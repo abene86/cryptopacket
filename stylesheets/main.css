@@ -1,90 +1,163 @@
-header{
-    display:flex;
+header {
+    display: flex;
     align-items: center;
     justify-content: space-around;
     background-color: beige;
     height: 55px;
     box-shadow: 0px 0px 10px 0px;
-   
 }
-.boxOutside{
-    margin-top:6px;
-    display:flex;
-    align-items:center;
+
+.boxOutside {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
     justify-content: space-around;
-    width:900px;
+    width: 900px;
     height: 90px;
     /* background-color: white; */
     /* border: solid black 1px; */
 }
-.maintitle{
-    text-align:center;
+
+.maintitle {
+    text-align: center;
     align-items: center;
-    font-size:50px;
-    font-family:"shizuru";
+    font-size: 50px;
+    font-family: "shizuru";
+    margin-bottom: 60px;
 }
-.boxInside{
+
+.boxInside {
     border: solid black 1px;
     display: grid;
-    align-items:center;
+    align-items: center;
     justify-content: space-around;
+    background-color: antiquewhite;
     opacity: 85%;
     /* border-top-right-radius: 10px;
     border-bottom-right-radius: 30px; */
-    border-radius:12px;
+    border-radius: 12px;
     box-shadow: 0px 5px 3px 0px;
-    background-color: white;
-    width:100px;
-    height:69px;
+    width: 100px;
+    height: 69px;
 }
-.iconImage{
+
+.iconImage {
     margin-top: 10px;
 }
-main{
-    display:flex;
+
+main {
+    display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
-.tickerText{
+
+.tickerText {
     margin-top: 0px;
     text-align: center;
-    font-family:"Bungee";
+    font-family: "Bungee";
     font-size: 20px;
     color: black;
     text-decoration: none;
-    padding:10px;
-
+    padding: 10px;
 }
-.buttonClick{
+
+.buttonClick {
     color: black;
     text-decoration: none;
 }
-.holdMainContent{
-    border: solid black 1px;
-    /* background-color: white; */
-    border-top-right-radius:10px;
-    border-top-left-radius:10px;
-    border-bottom-right-radius:10px;
-    border-bottom-left-radius:10px;
-    margin-top:10px;
-    display:flex;
+
+.holdMainContent {
+    /* border: solid black 1px; */
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0px 3px 0px 4px;
+    margin-top: 10px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: 1000px;
     height: auto;
 }
-hr{
-    margin-top:0px;
+
+hr {
+    margin-top: 0px;
 }
-.titleOne{
+
+.titleOne {
     margin-right: 20px;
     font-size: 25px;
     font-weight: bold;
-    font-family:"shizuru";
+    font-family: "shizuru";
 }
-body{
-    margin-top:0px;
-    margin-right:0px;
-    margin-left:0px;
-    background-color:azure;
+
+body {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    background-color: azure;
+}
+
+
+/* this code below is for the second page */
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.headerDiv {
+    margin-top: 20px;
+    border: #000000 solid 1px;
+    height: 50px;
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.graphDiv {
+    border: black solid 1px;
+    display: flex;
+    justify-content: space-between;
+    height: 350px;
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.infoDiv {
+    border: black solid 1px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.infoDiv1 {
+    border: black solid 1px;
+    margin-top: 10px;
+    height: 180px;
+    width: 350px;
+    margin-bottom: 10px;
+    margin-right: 1px;
+}
+
+.infoDiv2 {
+    border: black solid 1px;
+    margin-top: 10px;
+    height: 180px;
+    width: 350px;
+    margin-bottom: 10px;
+    margin-right: 1px;
+}
+
+.divbutton {
+    border: black solid 1px;
+}
+
+.divAGraph {
+    border: black solid 1px;
+    height: 345px;
+    width: 400px;
 }
