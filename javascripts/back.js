@@ -31,8 +31,6 @@ let main = function() {
         console.log(val);
         retTicker(val);
     });
-
-
 };
 
 $(document).ready(main);
@@ -65,7 +63,7 @@ const getdata = async function() {
     let rawdata = await fetch(url);
     let datax = await rawdata.json();
     let length = datax.data.length;
-    console.log(length);
+    console.log(datax);
     for (let i = 0; i < length; i++) {
         coinlist.push(datax.data[i]);
     }
