@@ -152,8 +152,25 @@ body {
     margin-right: 1px;
 }
 
-.divbutton {
+.divButton {
     border: black solid 1px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button1 {
+    height: 20px;
+    width: 70px;
+}
+
+.button2 {
+    height: 20px;
+    width: 70px;
+}
+
+.button3 {
+    height: 20px;
+    width: 70px;
 }
 
 .divAGraph {

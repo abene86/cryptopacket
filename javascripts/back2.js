@@ -1,6 +1,13 @@
 let coin_data = [];
 var main = function() {
     $divH = $("<div>").addClass("headerDiv");
+    $divB = $("<div>").addClass("divButton");
+    let $button1 = $("<button>").addClass("button1").text("1D");
+    let $button2 = $("<button>").addClass("button2").text("7D");
+    let $button3 = $("<button>").addClass("button2").text("1M");
+    $divB.append($button1)
+        .append($button2)
+        .append($button3);
     $divg = $("<div>").addClass("graphDiv");
     addGraph($divg);
     $divi = $("<div>").addClass("infoDiv");
@@ -10,6 +17,7 @@ var main = function() {
     $divi.append($divi_2);
     $mainD = $("<div>").addClass("mainContent");
     $mainD.append($divH)
+        .append($divB)
         .append($divg)
         .append($divi);
     $("main").append($mainD);
@@ -28,16 +36,9 @@ var main = function() {
 //     });
 // }
 var addGraph = function(divg) {
-    let divbutton = $("<div>").addClass("divButton");
-    let divAGraph = $("<div>").addClass("divAGraph");
-    let $button1 = $("<button>").addClass("button1").text("1 day");
-    let $button2 = $("<button>").addClass("button2").text("7 day");
-    let $button3 = $("<button>").addClass("button2").text("1 month");
-    divbutton.append($button1)
-        .append($button2)
-        .append($button3);
-    divg.append(divAGraph);
-    divg.append(divbutton);
+    //let divbutton = $("<div>").addClass("divButton");
+    console.log("in add graph");
+
 
 }
 $(document).ready(main);
