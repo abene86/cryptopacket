@@ -1,6 +1,10 @@
 let coin_data = [];
+let url = window.location.href;
+let urls = url.split("=",2);
+let urla = decodeURIComponent(urls[0]);
+const ticker = decodeURIComponent(urls[1]);
 var main2 = function() {
-    let $divH = $("<div>").addClass("headerDiv"),
+    let $divH = $("<div>").addClass("headerDiv").text(ticker+"/USD"),
         $divg = $("<div>").addClass("graphDiv"),
         $divi = $("<div>").addClass("infoDiv"),
         $divB = $("<div>").addClass("divButton");

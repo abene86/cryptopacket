@@ -74,7 +74,7 @@ const retTicker = async function(userinput) {
     let i = 0;
     await getdata();
     while (i < coinlist.length) {
-        if (coinlist[i] === userinput || coinlist[i] === userinput || coinlist[i].slug === userinput) {
+        if (coinlist[i].name === userinput || coinlist[i].symbol.toLowerCase() === userinput || coinlist[i].slug === userinput) {
             tickRet = coinlist[i].symbol;
             window.location.href = "index2.html?coin=" + tickRet;
         }
