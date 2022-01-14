@@ -61,6 +61,11 @@ main {
     padding: 10px;
 }
 
+.bigtitles {
+    text-decoration: none;
+    color: black;
+}
+
 .buttonClick {
     color: black;
     text-decoration: none;
