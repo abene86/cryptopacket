@@ -6,23 +6,17 @@ let mainDiv,
     //the global variable the hold the data for api call
     CAP = 56,
     //for api value
-    dataraw,
+    coinlist = [],
     //value for user input for search
     tickRet;
 
 
 
 let main = function() {
-    var titles,
-        val,
-        $a;
+    createDyMainArea();
+    createBoxesInsideMainArea(CAP);
+    populateInfoInsideBoxes();
 
-    mainDiv = $("<div>").addClass("holdMainContent");
-    titles = $("<h1>").text("CryptoPackets").addClass("maintitle");
-    $("main").append(mainDiv);
-    $(mainDiv).append(titles);
-    createBoxes(CAP);
-    populate();
     $(".searchBarArea input").on("keypress", function(event) {
         val = $(".search").val();
         console.log(event);
@@ -43,71 +37,16 @@ let main = function() {
 
 $(document).ready(main);
 //it checks the userinput and returns a ticker
-var retTicker = function(userinput) {
-    var api_key = "61622442-ca19-484c-b97b-5c086b6ab312",
-        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' + api_key,
-        i;
-
-    fetch(url).then(response => {
-        return response.json();
-    }).then(dataraw => {
-        tickRet = "failed";
-        userinput = userinput.toLowerCase();
-        i = 0;
-        while (i < dataraw.data.length) {
-            console.log(i);
-            if (dataraw.data[i].name === userinput || dataraw.data[i].symbol === userinput || dataraw.data[i].slug === userinput) {
-                tickRet = dataraw.data[i].symbol;
-                window.location.href = "index2.html?coin=" + tickRet;
-            }
-            i++;
-        }
-        if (tickRet === "failed")
-            alert("NOT FOUND: please search again");
-    });
-};
-//it populates the information inside the boxes
-var populate = function() {
-    //the api key
-    var api_key = "61622442-ca19-484c-b97b-5c086b6ab312",
-        //api url from coin market cap
-        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' + api_key,
-        $a,
-        text_val,
-        countofElement = 0,
-        coinRank,
-        coins = 1,
-        count = 0;
-    //we are fetch the api by using
-    //the fetch fuction and converting tp
-    //json
-    //accessing the data through dataraw
-    fetch(url).then(response => {
-        return response.json();
-    }).then(dataraw => {
-        while (true) {
-            coinRank = dataraw.data[countofElement].rank;
-            if (coinRank === coins) {
-                text_val = dataraw.data[countofElement].symbol;
-                $a = $("<a>").addClass("tickerText");
-                $a.attr("href", "index2.html?=" + text_val);
-                $a.text(text_val);
-                divObjects[coins - 1].append($a);
-                coins++;
-                count++;
-                countofElement = 0;
-            } else if (count === CAP) {
-                break;
-            } else {
-                countofElement++;
-            }
-        }
-    });
-};
-
-//this function dynamical creates the boxes based on the numbers
-var createBoxes = function(number) {
-    var div1,
+const createDyMainArea = function() {
+        let titles;
+        mainDiv = $("<div>").addClass("holdMainContent");
+        titles = $("<h1>").text("CryptoPackets").addClass("maintitle");
+        $("main").append(mainDiv);
+        $(mainDiv).append(titles);
+    }
+    //this function dynamical creates the boxes based on the numbers
+const createBoxesInsideMainArea = function(number) {
+    let div1,
         div2,
         i;
     for (i = 0; i < number; i++) {
@@ -118,5 +57,61 @@ var createBoxes = function(number) {
         div2 = $("<div>").addClass("boxInside");
         divObjects[i] = (div2);
         $(div1).append(div2);
+    }
+};
+const getdata = async function() {
+    let api_key = "61622442-ca19-484c-b97b-5c086b6ab312",
+        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' + api_key;
+    let rawdata = await fetch(url);
+    let datax = await rawdata.json();
+    let length = datax.data.length;
+    console.log(length);
+    for (let i = 0; i < length; i++) {
+        coinlist.push(datax.data[i]);
+    }
+}
+const retTicker = async function(userinput) {
+    tickRet = "failed";
+    userinput = userinput.toLowerCase();
+    let i = 0;
+    await getdata();
+    while (i < coinlist.length) {
+        if (coinlist[i] === userinput || coinlist[i] === userinput || coinlist[i].slug === userinput) {
+            tickRet = coinlist[i].symbol;
+            window.location.href = "index2.html?coin=" + tickRet;
+        }
+        i++;
+    }
+    if (tickRet === "failed")
+        alert("NOT FOUND: please search again");
+}
+
+//it populates the information inside the boxes
+const populateInfoInsideBoxes = async function() {
+    let $a,
+        text_val,
+        countofElement = 0,
+        coinRank,
+        coins = 1,
+        count = 0;
+    //we are fetch the api by using
+    //the fetch fuction and converting tp
+    //json
+    //accessing the data through dataraw
+    await getdata();
+    while (true) {
+        coinRank = coinlist[countofElement].rank;
+        if (coinRank === coins) {
+            text_val = coinlist[countofElement].symbol;
+            $a = $("<a>").addClass("tickerText")
+                .attr("href", "index2.html?=" + text_val)
+                .text(text_val);
+            divObjects[coins - 1].append($a);
+            coins++;
+            count++;
+            countofElement = 0;
+        } else if (count === CAP) {
+            break;
+        } else { countofElement++ }
     }
 };
