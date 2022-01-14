@@ -16,7 +16,8 @@ var main = function() {
     $("main").append($mainD);
 };
 const setUpHDIV_Data = function($divH) {
-    let $text = $("<h3>").text("BITCOIN: (BTC)");
+    let $text = $("<h3>").addClass("title2")
+        .text("BITCOIN: (BTC)");
     $divH.append($text);
 }
 const setUpIDivData = function($divi) {
