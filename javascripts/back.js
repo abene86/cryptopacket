@@ -39,7 +39,7 @@ const createDyMainArea = function() {
         let titles;
         mainDiv = $("<div>").addClass("holdMainContent");
         titles = $("<h1>").text("CryptoPackets").addClass("maintitle");
-        $("main").append(mainDiv);
+        $(".main1").append(mainDiv);
         $(mainDiv).append(titles);
     }
     //this function dynamical creates the boxes based on the numbers
@@ -63,7 +63,7 @@ const getdata = async function() {
     let rawdata = await fetch(url);
     let datax = await rawdata.json();
     let length = datax.data.length;
-    console.log(datax);
+    console.log(length);
     for (let i = 0; i < length; i++) {
         coinlist.push(datax.data[i]);
     }

@@ -1,5 +1,5 @@
 let coin_data = [];
-var main = function() {
+var main2 = function() {
     let $divH = $("<div>").addClass("headerDiv"),
         $divg = $("<div>").addClass("graphDiv"),
         $divi = $("<div>").addClass("infoDiv"),
@@ -13,7 +13,22 @@ var main = function() {
         .append($divB)
         .append($divg)
         .append($divi);
-    $("main").append($mainD);
+    $(".main2").append($mainD);
+
+    $(".searchBarArea input").on("keypress", function(event) {
+        val = $(".search").val();
+        console.log(event);
+        if (event.keyCode === 13) {
+            retTicker(val);
+        }
+    });
+
+    $(".searchBarArea button").on("click", function(event) {
+        console.log("hello world");
+        val = $(".search").val();
+        console.log(val);
+        retTicker(val);
+    });
 };
 const setUpHDIV_Data = function($divH) {
     let $text = $("<h3>").addClass("title2")
@@ -78,4 +93,4 @@ const addGraph = function(divg) {
     divg.append(CanvasElement);
 
 }
-$(document).ready(main);
+$(document).ready(main2);
