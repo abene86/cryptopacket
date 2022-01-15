@@ -72,11 +72,20 @@ const retTicker = async function(userinput) {
     tickRet = "failed";
     userinput = userinput.toLowerCase();
     let i = 0;
+    let symbol;
     await getdata();
     while (i < coinlist.length) {
-        if (coinlist[i].name === userinput || coinlist[i].symbol.toLowerCase() === userinput || coinlist[i].slug === userinput) {
+        symbol = coinlist[i].symbol.toLowerCase();
+        console.log("*************");
+        console.log(coinlist[i].name);
+        console.log(symbol);
+        console.log(coinlist[i].slug);
+        console.log("*************");
+        if (coinlist[i].name === userinput || symbol === userinput || coinlist[i].slug === userinput) {
             tickRet = coinlist[i].symbol;
+            console.log(tickRet);
             window.location.href = "index2.html?coin=" + tickRet;
+            break;
         }
         i++;
     }

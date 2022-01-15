@@ -2,6 +2,8 @@ let coin_data = [];
 let url = window.location.href;
 let urls = url.split("=",2);
 let urla = decodeURIComponent(urls[0]);
+let xtime = [];
+let yprice = [];
 const ticker = decodeURIComponent(urls[1]);
 var main2 = function() {
     let $divH = $("<div>").addClass("headerDiv").text(ticker+"/USD"),
@@ -9,7 +11,8 @@ var main2 = function() {
         $divi = $("<div>").addClass("infoDiv"),
         $divB = $("<div>").addClass("divButton");
     setUpHDIV_Data($divH);
-    setUpBDiv_Data($divB)
+    setUpBDiv_Data($divB);
+    copyData();
     addGraph($divg);
     setUpIDivData($divi);
     $mainD = $("<div>").addClass("mainContent");
@@ -56,24 +59,45 @@ const setUpBDiv_Data = function($divB) {
 }
 const copyData = async function() {
         let api_key = "B1303CB3-695B-4CCB-B7B0-535896B9BB96",
-            url = 'https://rest.coinapi.io/v1/trades/BITSTAMP_SPOT_BTC_USD/history?time_start=2016-01-01T00:00:00?X-CoinAPI-Key=' + api_key,
+            url = 'https://rest.coinapi.io/v1/trades/BINANCEUS_SPOT_'+ticker+'_USD/history?time_start=2016-01-01T00:00:00',
             i;
 
-        let rawdata = await fetch(url);
-        let dataz = await rawdata.json();
-        console.log(dataz);
+        fetch(url,{
+            method: "GET",
+            headers: {
+                "X-CoinAPI-Key": api_key
+            }
+        })
+        .then(response => {
+            return response.json();
+        }).then(function(data){
+            console.log("*********");
+            console.log(data.length);
+            console.log("*********");
+            for(i = 0; i<5; i++){
+                xtime.push(data[i].time_exchange);
+                yprice.push(data[i].price);
+            }
+        });
+        console.log("AAAAAAA");
+        console.log(xtime);
+        console.log(yprice);
+        //console.log(dataz);
     }
     //creates the graph;
 const addGraph = function(divg) {
+    console.log("111111");
+    console.log(xtime);
+    console.log(yprice);
     let CanvasElement = $('<canvas/>', { 'width': 800, 'height': 200, 'id': 'mychart' })
     const ctx = CanvasElement.get(0).getContext("2d");;
     const myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [1,2,3,4,5],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [1,2,3,4,5],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
