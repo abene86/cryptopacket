@@ -1,18 +1,48 @@
+
+
 let coin_data = [];
 let url = window.location.href;
-let urls = url.split("=",2);
+let urls = url.split("=",3);
 let urla = decodeURIComponent(urls[0]);
 let xtime = [];
 let yprice = [];
+let dataobj = [];
+const coinname = decodeURIComponent(urls[2]);
+console.log("!!!!!!!!!!!!");
+console.log(coinname);
 const ticker = decodeURIComponent(urls[1]);
+let urlapi = 'https://api.coingecko.com/api/v3/coins/'+coinname+'/market_chart?vs_currency=usd&days=7'
 var main2 = function() {
-    let $divH = $("<div>").addClass("headerDiv").text(ticker+"/USD"),
+    let $divH = $("<div>").addClass("headerDiv"),
         $divg = $("<div>").addClass("graphDiv"),
         $divi = $("<div>").addClass("infoDiv"),
         $divB = $("<div>").addClass("divButton");
     setUpHDIV_Data($divH);
-    setUpBDiv_Data($divB);
-    copyData();
+    let $button1 = $("<button>").addClass("button1").text("1D");
+    let $button2 = $("<button>").addClass("button2").text("7D");
+    let $button3 = $("<button>").addClass("button3").text("1M");
+    $divB.append($button1)
+        .append($button2)
+        .append($button3);
+    //setUpBDiv_Data($divB);
+    $($button1).on("click", function(event) {
+        console.log("aaaaa");
+        urlapi = 'https://api.coingecko.com/api/v3/coins/'+coinname+'/market_chart?vs_currency=usd&days=1';
+        addGraph($divg);
+    });
+    $($button2).on("click", function(event) {
+        console.log("bbbbbbb");
+        urlapi = 'https://api.coingecko.com/api/v3/coins/'+coinname+'/market_chart?vs_currency=usd&days=7';
+        addGraph($divg);
+    });
+    $($button3).on("click", function(event) {
+        console.log("cccc");
+        urlapi = 'https://api.coingecko.com/api/v3/coins/'+coinname+'/market_chart?vs_currency=usd&days=30';
+        addGraph($divg);
+        
+    });
+   // copyData();
+   console.log("gggggg");
     addGraph($divg);
     setUpIDivData($divi);
     $mainD = $("<div>").addClass("mainContent");
@@ -39,7 +69,7 @@ var main2 = function() {
 };
 const setUpHDIV_Data = function($divH) {
     let $text = $("<h3>").addClass("title2")
-        .text("BITCOIN: (BTC)");
+        .text(ticker+"/USD");
     $divH.append($text);
 }
 const setUpIDivData = function($divi) {
@@ -48,17 +78,41 @@ const setUpIDivData = function($divi) {
     $divi.append($divi_1);
     $divi.append($divi_2);
 }
-const setUpBDiv_Data = function($divB) {
+/*const setUpBDiv_Data = function($divB) {
     let $button1 = $("<button>").addClass("button1").text("1D");
     let $button2 = $("<button>").addClass("button2").text("7D");
-    let $button3 = $("<button>").addClass("button2").text("1M");
+    let $button3 = $("<button>").addClass("button3").text("1M");
     $divB.append($button1)
         .append($button2)
         .append($button3);
 
+}*/
+
+const formatData = data => {
+    return data.map(el =>{
+        return {
+            t: el[0],
+            y: el[1].toFixed(2)
+        }
+    })
+
 }
+// buttton for time period function will call copyData and we will send using parameter so we can make url accordingly.
 const copyData = async function() {
-        let api_key = "B1303CB3-695B-4CCB-B7B0-535896B9BB96",
+        //let url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7';
+        console.log("AAAAAAAAAA");
+        console.log(urlapi);
+        let response = await fetch(urlapi,{
+            method: "GET",
+        });
+        let dataproc  = await response.json();
+            //dataobj = formatData(data.prices);
+        for(let i = 0; i<dataproc.prices.length; i++){
+            xtime.push(dataproc.prices[i][0]);
+            yprice.push(dataproc.prices[i][1]);
+        }
+
+        /*let api_key = "B1303CB3-695B-4CCB-B7B0-535896B9BB96",
             url = 'https://rest.coinapi.io/v1/trades/BINANCEUS_SPOT_'+ticker+'_USD/history?time_start=2016-01-01T00:00:00',
             i;
 
@@ -75,48 +129,95 @@ const copyData = async function() {
             console.log(data.length);
             console.log("*********");
             for(i = 0; i<5; i++){
-                xtime.push(data[i].time_exchange);
+                let time = data[i].time_exchange;
+                let times = time.split("T",2);
+                let date = times[0];
+                let hour = times[1];
+                console.log("**************");
+                console.log(date);
+                console.log(hour);
+                console.log("**************");
+                xtime.push(data);
                 yprice.push(data[i].price);
             }
         });
         console.log("AAAAAAA");
         console.log(xtime);
         console.log(yprice);
-        //console.log(dataz);
+        //console.log(dataz);*/
     }
     //creates the graph;
-const addGraph = function(divg) {
-    console.log("111111");
-    console.log(xtime);
-    console.log(yprice);
-    let CanvasElement = $('<canvas/>', { 'width': 800, 'height': 200, 'id': 'mychart' })
+const addGraph = async function(divg) {
+    xtime = [];
+    yprice = [];
+    await copyData();
+    divg.empty();
+    let CanvasElement = $('<canvas/>', { 'width': 400, 'height': 400, 'id': 'mychart' });
     const ctx = CanvasElement.get(0).getContext("2d");;
     const myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: [1,2,3,4,5],
+            labels: xtime,
             datasets: [{
-                label: '# of Votes',
-                data: [1,2,3,4,5],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                label: ticker+ "/USD",
+                data: yprice,
+                backgroundColor:
+                    'rgba(102, 178, 255, 0.4)',
+                borderColor: 
+                    'rgba(0, 0, 255, 0.4)', 
+
+                pointRadius: 0,
+                fill: {
+                    target: 'origin',
+                    above: 'rgb(102, 178, 255)',   // Area will be red above the origin
+                    below: 'rgb(102, 178, 255)'    // And blue below the origin
+                }
             }]
         },
+        /*options: {
+            scales: {
+                xAxes: {
+                    type: "time"
+                }
+            }
+        }*/
+        options: {
+            lineHeightAnnotation: {
+                always: true,
+                hover: false,
+                lineWeight: 1.5
+            },
+            animation: {
+                duration: 2000
+            },
+            maintainAspectRation: false,
+            responsive: true,
+            scales: {
+                xAxis: {
+                        type: 'time',
+                        duration: "linear"
+                },
+                //xAxis: {
+                //    type: "type",
+                //}
+        //         bounds: 'data'
+            },
+            plugins: {
+                zoom: {
+                    pan: {
+                        enabled: true,
+                        mode: 'x',
+                        speed: 10,
+                        threshold: 10
+                    },
+                    zoom: {
+                        enabled: true,
+                        mode: 'y'
+                    }
+                }
+            }
+        },
+        
     });
     divg.append(CanvasElement);
 

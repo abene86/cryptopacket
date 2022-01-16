@@ -13,6 +13,7 @@ let mainDiv,
 
 
 let main = function() {
+    //console.log("*******************11111");
     createDyMainArea();
     createBoxesInsideMainArea(CAP);
     populateInfoInsideBoxes();
@@ -69,13 +70,16 @@ const getdata = async function() {
     }
 }
 const retTicker = async function(userinput) {
+    $("main").empty();
     tickRet = "failed";
     userinput = userinput.toLowerCase();
     let i = 0;
     let symbol;
+    let name;
     await getdata();
     while (i < coinlist.length) {
         symbol = coinlist[i].symbol.toLowerCase();
+        name = coinlist[i].slug;
         console.log("*************");
         console.log(coinlist[i].name);
         console.log(symbol);
@@ -84,7 +88,8 @@ const retTicker = async function(userinput) {
         if (coinlist[i].name === userinput || symbol === userinput || coinlist[i].slug === userinput) {
             tickRet = coinlist[i].symbol;
             console.log(tickRet);
-            window.location.href = "index2.html?coin=" + tickRet;
+            console.log(name);
+            window.location.href = "index2.html?=" + tickRet + "=" + name;
             break;
         }
         i++;
@@ -111,7 +116,7 @@ const populateInfoInsideBoxes = async function() {
         if (coinRank === coins) {
             text_val = coinlist[countofElement].symbol;
             $a = $("<a>").addClass("tickerText")
-                .attr("href", "index2.html?=" + text_val)
+                .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].slug)
                 .text(text_val);
             divObjects[coins - 1].append($a);
             coins++;
