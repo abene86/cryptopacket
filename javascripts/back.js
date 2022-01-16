@@ -59,14 +59,12 @@ const createBoxesInsideMainArea = function(number) {
     }
 };
 const getdata = async function() {
-    let api_key = "61622442-ca19-484c-b97b-5c086b6ab312",
-        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' + api_key;
+    let url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false';
     let rawdata = await fetch(url);
     let datax = await rawdata.json();
-    let length = datax.data.length;
-    console.log(length);
-    for (let i = 0; i < length; i++) {
-        coinlist.push(datax.data[i]);
+    console.log(datax);
+    for (let i = 0; i < datax.length; i++) {
+        coinlist.push(datax[i]);
     }
 }
 const retTicker = async function(userinput) {
@@ -78,18 +76,11 @@ const retTicker = async function(userinput) {
     let name;
     await getdata();
     while (i < coinlist.length) {
-        symbol = coinlist[i].symbol.toLowerCase();
-        name = coinlist[i].slug;
-        console.log("*************");
-        console.log(coinlist[i].name);
-        console.log(symbol);
-        console.log(coinlist[i].slug);
-        console.log("*************");
-        if (coinlist[i].name === userinput || symbol === userinput || coinlist[i].slug === userinput) {
-            tickRet = coinlist[i].symbol;
+        name = coinlist[i].name.toLowerCase();
+        if (name === userinput || coinlist[i].symbol === userinput || coinlist[i].id === userinput) {
+            tickRet = coinlist[i].symbol.toUpperCase();
             console.log(tickRet);
-            console.log(name);
-            window.location.href = "index2.html?=" + tickRet + "=" + name;
+            window.location.href = "index2.html?=" + tickRet + "=" + coinlist[i].id;
             break;
         }
         i++;
@@ -112,11 +103,12 @@ const populateInfoInsideBoxes = async function() {
     //accessing the data through dataraw
     await getdata();
     while (true) {
-        coinRank = coinlist[countofElement].rank;
+        coinRank = coinlist[countofElement].market_cap_rank;
         if (coinRank === coins) {
-            text_val = coinlist[countofElement].symbol;
+            text_val = coinlist[countofElement].symbol.toUpperCase();
+            console.log(text_val);
             $a = $("<a>").addClass("tickerText")
-                .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].slug)
+                .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
                 .text(text_val);
             divObjects[coins - 1].append($a);
             coins++;
