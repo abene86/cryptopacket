@@ -31,7 +31,7 @@ header {
     display: grid;
     align-items: center;
     justify-content: space-around;
-    background-color: antiquewhite;
+    background-color: white;
     opacity: 85%;
     align-content: center;
     /* border-top-right-radius: 10px;
@@ -44,7 +44,6 @@ header {
 
 .currprice {
     margin-top: 0px;
-    color: green;
     font-size: 14px;
 }
 
@@ -78,12 +77,12 @@ main {
 }
 
 .holdMainContent {
-    /* border: solid black 1px; */
+    border: solid black 1px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    box-shadow: 0px 3px 0px 4px;
+    box-shadow: 0px 2px 0px 2px;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
@@ -117,7 +116,7 @@ body {
     border: black solid 1px;
     padding: 10px;
     padding-top: 0px;
-    display: flex;
+    display: flow-root;
     margin-top: 10px;
     flex-direction: column;
     align-items: center;
@@ -125,13 +124,21 @@ body {
 
 .headerDiv {
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     /* border: #000000 solid 1px; */
     display: flex;
     justify-content: space-evenly;
-    height: 50px;
+    height: 56px;
     width: 800px;
-    margin-bottom: 2px;
+}
+
+.infoK {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 66px;
+    padding: 0px;
+    font-size: 15px;
+    font-family: 'Abel';
 }
 
 .logoimg {
@@ -141,6 +148,7 @@ body {
 .infoH {
     margin-top: 3px;
     margin-bottom: 3px;
+    font-family: 'Abel';
 }
 
 .infocoinH {
@@ -155,8 +163,16 @@ body {
 
 .title2 {
     font-family: "bungee";
+    margin-left: 6px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.infodivT {
+    padding: 0px 5px 0px 5px;
+    font-family: 'Abel';
+    margin-top: 4px;
+    margin-bottom: 5px;
 }
 
 .graphDiv {
@@ -187,16 +203,25 @@ body {
     margin-top: 10px;
     height: 180px;
     width: 350px;
+    display: grid;
+    align-content: space-evenly;
     margin-bottom: 10px;
     margin-right: 1px;
     box-shadow: 0px 5px 2px 0px;
 }
 
+.headerInfoDIv {
+    font-family: "Bungee";
+    font-size: 16px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
 .infoDiv2 {
     border: black solid 1px;
     display: flex;
-    margin-top: 10px;
-    height: 180px;
+    margin-top: 30px;
+    height: 220px;
     width: 350px;
     margin-bottom: 10px;
     margin-right: 1px;
@@ -204,13 +229,21 @@ body {
     flex-direction: column;
 }
 
+.divi_2Header {
+    text-align: center;
+    font-family: 'bungee';
+    margin-top: 2px;
+    margin-bottom: 0px;
+}
+
 .divButton {
     border: black solid 1px;
     display: flex;
     justify-content: flex-end;
     padding: 3px;
+    background-color: #014f86;
     width: 800px;
-    margin-top: 3px;
+    margin-top: 10px;
     border-radius: 10px 10px 10px 10px;
     box-shadow: 0px 2px 2px 0px;
 }
@@ -231,7 +264,12 @@ body {
 }
 
 .textdate {
-    text-align: center;
+    font-family: 'Abel';
+    margin-top: 7px;
+}
+
+.amount {
+    font-family: 'Abel';
 }
 
 

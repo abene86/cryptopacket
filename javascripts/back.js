@@ -96,6 +96,7 @@ const populateInfoInsideBoxes = async function() {
         text_val,
         countofElement = 0,
         coinRank,
+        actprice,
         coins = 1,
         count = 0;
     //we are fetch the api by using
@@ -107,11 +108,20 @@ const populateInfoInsideBoxes = async function() {
         coinRank = coinlist[countofElement].market_cap_rank;
         if (coinRank === coins) {
             text_val = coinlist[countofElement].symbol.toUpperCase();
-            console.log(text_val);
+            actprice = coinlist[countofElement].current_price.toFixed(2)
+            actprice = actprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             $a = $("<a>").addClass("tickerText")
                 .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
                 .text(text_val);
-            $price = $("<p>").addClass("currprice").text("US:$" + coinlist[countofElement].current_price);
+            $price = $("<p>").addClass("currprice")
+                .text("US:");
+            let $span = $("<span>").text("$" + actprice);
+            $price.append($span);
+            if (coinlist[countofElement].price_change_24h < 0) {
+                $span.css("color", "red");
+            } else {
+                $span.css("color", "green");
+            }
             divObjects[coins - 1].append($a)
                 .append($price);
             coins++;

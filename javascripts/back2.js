@@ -84,11 +84,12 @@ const getDataInfo = async function() {
     //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
     coin_data.push(datax.image.small)
     coin_data.push(datax.description.en)
-    coin_data.push(datax.coingecko_rank);
-    coin_data.push(datax.market_data.current_price.usd);
-    coin_data.push(datax.market_data.market_cap.aed);
-    coin_data.push(datax.market_data.max_supply)
-    coin_data.push(datax.community_data.twitter_followers);
+    coin_data.push(datax.market_data.market_cap_rank);
+    coin_data.push(datax.market_data.current_price.usd.toLocaleString('en-US'));
+    coin_data.push(datax.market_data.market_cap.aed.toLocaleString('en-US'));
+    coin_data.push(datax.market_data.circulating_supply.toLocaleString('en-US'));
+    coin_data.push(datax.community_data.twitter_followers.toLocaleString('en-US'));
+    coin_data.push(datax.market_data.price_change_24h);
     console.log(coin_data);
 
 }
@@ -110,29 +111,55 @@ const setUpHDIV_Data = async function($divH) {
     let $coinTick,
         $priceinfo,
         $infodiv,
+        $infodiv2_logo,
+        $infodiv2_rank,
         $infodiv2,
+        $infoDiv3,
         $coinlogo,
+        $priceChange24,
+        $span,
         $coinrank;
     $coinTick = $("<h3>").addClass("title2")
         .text(ticker + "/USD");
     $coinlogo = $("<img>").addClass("logoimg")
         .attr("src", coin_data[0]);
-    $infodiv2 = $("<div>").addClass("logotitleareas")
+    $priceChange24 = $("<p>").addClass("infoH")
+        .text("Price Change 24HR: ")
+    $span = $("<span>").text(coin_data[7]);
+    $priceChange24.append($span);
+    if (coin_data[7] < 0) {
+        $span.css("color", "red");
+    } else if (coin_data[7] > 0) {
+        $span.css("color", "green");
+    } else {
+        $span.css("color", yellow);
+    }
+    $coinrank = $("<p>")
+        .addClass("infoK")
+        .text("Rank:" + coin_data[2]);
+    $infodiv2_logo = $("<div>")
+        .addClass("logotitleareas")
         .append($coinlogo)
         .append($coinTick);
+    $infodiv2_rank = $("<div>").addClass("coinRank")
+        .addClass("infoDiv2Rank")
+        .append($coinrank);
+    $infodiv2 = $("<div>").addClass("wholeLogoHeader")
+        .append($infodiv2_logo)
+        .append($infodiv2_rank);
+
     $priceinfo = $("<p>")
         .addClass("infoH")
         .text("Current Price USD:$" + coin_data[3]);
-    $coinrank = $("<p>")
-        .addClass("infoH")
-        .text("Rank:" + coin_data[2]);
+
+
     $twitterinfo = $("<p>")
         .addClass("infoH")
     $infodiv = $("<div>").addClass("infocoinH")
         .append($priceinfo)
-        .append($coinrank);
+        .append($priceChange24)
     $divH.append($infodiv2)
-        .append($infodiv);
+        .append($infodiv)
 }
 
 const formatData = data => {
@@ -223,23 +250,27 @@ const applyinfoDiv1 = async function(divi1) {
     //index 3 holds the current price of the coin index 4 holds the market cap of the coin
     //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
     await getDataInfo();
-    let $InfoHeader = $("<h3>").text("Information: ");
+    let $InfoHeader = $("<h3>").addClass("headerInfoDIv")
+        .text("Information: ");
     let $twitterinfo = $("<p>").addClass("infodivT")
-        .text("Twitter followers:" + coin_data[6]);
+        .text("Twitter followers: " + " " + coin_data[6]);
     let $marketCap = $("<p>").addClass("infodivT")
-        .text("MarketCap: " + coin_data[4]);
+        .text("MarketCap: " + " " + coin_data[4]);
     let $marketsupply = $("<p>").addClass("infodivT")
-        .text("Market Supply:" + coin_data[5]);
+        .text("Market Supply: " + " " + coin_data[5]);
     divi1.append($InfoHeader)
         .append($twitterinfo)
         .append($marketsupply)
         .append($marketCap);
 }
 const createButtonDiv2 = function($divi_2) {
-    let $bbutton = $("<button>").addClass("bb").text("Back-Test");
-    $divi_2.append('<p class="textdate">DATE');
+    let $header = $("<h4>").addClass("divi_2Header")
+        .text("Back Testing");
+    let $bbutton = $("<button>").addClass("bb").text("Search");
+    $divi_2.append($header)
+    $divi_2.append('<p class="textdate">Enter date:');
     $divi_2.append('<input type="date" class="date" placeholder="hello">');
-    $divi_2.append('<p class="amount">amount');
+    $divi_2.append('<p class="amount">Enter the amount in US($):');
     $divi_2.append('<input type="text" class="amountin">');
     $divi_2.append($bbutton);
 }
