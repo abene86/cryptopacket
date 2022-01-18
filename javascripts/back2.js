@@ -50,6 +50,25 @@ var main2 = function() {
         .append($divi);
     $(".main2").append($mainD);
 
+    $(".bb").on("click", function(event) {
+        console.log("helloworld");
+        start = $(".date").val();
+        start = new Date(start.split("-").join(".")).getTime() / 1000;
+        amounts = $(".amountin").val();
+        console.log(start);
+        console.log(amounts);
+        //current date must be checked and.
+        if (amounts === "" || start === "") {
+            alert("please input the correct value.");
+        }
+        //should find out date is valid some coin history start in 2017 if user put 2000
+        else {
+            window.location.href = "index3.html?=" + start + "=" + amounts;
+        }
+
+    });
+
+
 };
 
 $(document).ready(main2);
@@ -78,6 +97,7 @@ const getDataGraph = async function() {
     let response = await fetch(urlapi, {
         method: "GET",
     });
+
     let dataproc = await response.json();
     for (let i = 0; i < dataproc.prices.length; i++) {
         xtime.push(dataproc.prices[i][0]);
