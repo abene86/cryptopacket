@@ -37,11 +37,15 @@ let main = function() {
 $(document).ready(main);
 //it checks the userinput and returns a ticker
 const createDyMainArea = function() {
-        let titles;
+        let titles,
+            text;
+
         mainDiv = $("<div>").addClass("holdMainContent");
+        text = $("<p>Easily Access Info about your favorite coins</p>");
         titles = $("<h1>").text("CryptoPackets").addClass("maintitle");
         $(".main1").append(mainDiv);
-        $(mainDiv).append(titles);
+        $(mainDiv).append(titles)
+            .append(text);
     }
     //this function dynamical creates the boxes based on the numbers
 const createBoxesInsideMainArea = function(number) {
@@ -110,19 +114,20 @@ const populateInfoInsideBoxes = async function() {
             text_val = coinlist[countofElement].symbol.toUpperCase();
             actprice = coinlist[countofElement].current_price.toFixed(2)
             actprice = actprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            $a = $("<a>").addClass("tickerText")
-                .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
+            $a = $("<a>").attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
+                .addClass("tickerText")
                 .text(text_val);
             $price = $("<p>").addClass("currprice")
-                .text("US:");
-            let $span = $("<span>").text("$" + actprice);
-            $price.append($span);
+            let $span = $("<span>").text("$" + actprice).css("font-size", "15");
+            $price.append($span)
+                .css("font-family", 'Abel');
             if (coinlist[countofElement].price_change_24h < 0) {
                 $span.css("color", "red");
             } else {
                 $span.css("color", "green");
             }
-            divObjects[coins - 1].append($a)
+            divObjects[coins - 1]
+                .append($a)
                 .append($price);
             coins++;
             count++;
