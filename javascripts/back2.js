@@ -63,7 +63,7 @@ var main2 = function() {
         }
         //should find out date is valid some coin history start in 2017 if user put 2000
         else {
-            window.location.href = "index3.html?=" + start + "=" + amounts;
+            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" +ticker;
         }
 
     });
