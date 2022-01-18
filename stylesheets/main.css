@@ -149,7 +149,7 @@ body {
 }
 
 .logotitleareas {
-    display: grid;
+    display: flex;
     justify-items: center;
 }
 
@@ -230,15 +230,13 @@ body {
     width: 70px;
 }
 
-.textdate{
+.textdate {
     text-align: center;
 }
 
-.date {
-
-}
 
 /*third page*/
+
 .mainDiv {
     border: black solid 1px;
     padding: 10px;
@@ -258,10 +256,9 @@ body {
     height: 50px;
     width: 800px;
     margin-bottom: 2px;
-
 }
 
-.graph{
+.graph {
     border: black solid 1px;
     display: flex;
     justify-content: space-between;
@@ -271,8 +268,4 @@ body {
     margin-bottom: 10px;
     border-radius: 10px 10px 10px 10px;
     box-shadow: 0px 5px 2px 0px;
-}
-
-.info{
-
 }

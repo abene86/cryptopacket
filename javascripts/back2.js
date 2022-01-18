@@ -63,7 +63,7 @@ var main2 = function() {
         }
         //should find out date is valid some coin history start in 2017 if user put 2000
         else {
-            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" +ticker;
+            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" + ticker;
         }
 
     });
@@ -112,7 +112,6 @@ const setUpHDIV_Data = async function($divH) {
         $infodiv,
         $infodiv2,
         $coinlogo,
-        $twitterinfo,
         $coinrank;
     $coinTick = $("<h3>").addClass("title2")
         .text(ticker + "/USD");
@@ -129,31 +128,12 @@ const setUpHDIV_Data = async function($divH) {
         .text("Rank:" + coin_data[2]);
     $twitterinfo = $("<p>")
         .addClass("infoH")
-        .text("Twitter Followers:" + coin_data[6]);
     $infodiv = $("<div>").addClass("infocoinH")
-        .append($twitterinfo)
         .append($priceinfo)
         .append($coinrank);
     $divH.append($infodiv2)
         .append($infodiv);
 }
-
-const setUpIDivData = async function($divi) {
-    let $divi_1 = $("<div>").addClass("infoDiv1");
-    let $divi_2 = $("<div>").addClass("infoDiv2");
-    let $bbutton = $("<button>").addClass("bb").text("Back-Test");
-    $divi_2.append('<p class="textdate">DATE');
-    $divi_2.append('<input type="date" class="date" placeholder="hello">');
-    $divi_2.append('<p class="amount">amount');
-    $divi_2.append('<input type="text" class="amountin">');
-    $divi_2.append($bbutton);
-
-    //let $inday = $("<input>").attr("type", "date");
-    //$divi_2.append(day);
-    $divi.append($divi_1);
-    $divi.append($divi_2);
-}
-
 
 const formatData = data => {
     return data.map(el => {
@@ -223,4 +203,43 @@ const drawGraph = async function(divg) {
 
     });
     divg.append(CanvasElement);
+}
+
+//setups up the div info
+//call two helper functions applyinfodiv1 one forthe info div
+//createButtondivi for backtesting
+const setUpIDivData = function($divi) {
+    let $divi_1 = $("<div>").addClass("infoDiv1"),
+        $divi_2 = $("<div>").addClass("infoDiv2");
+    applyinfoDiv1($divi_1);
+    createButtonDiv2($divi_2);
+    $divi.append($divi_1);
+    $divi.append($divi_2);
+}
+const applyinfoDiv1 = async function(divi1) {
+    coin_data = [];
+    //depending on the index of the array we hold informations
+    //index 0-image(size small) 1-desc about the coin 2-the rank of the coin
+    //index 3 holds the current price of the coin index 4 holds the market cap of the coin
+    //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
+    await getDataInfo();
+    let $InfoHeader = $("<h3>").text("Information: ");
+    let $twitterinfo = $("<p>").addClass("infodivT")
+        .text("Twitter followers:" + coin_data[6]);
+    let $marketCap = $("<p>").addClass("infodivT")
+        .text("MarketCap: " + coin_data[4]);
+    let $marketsupply = $("<p>").addClass("infodivT")
+        .text("Market Supply:" + coin_data[5]);
+    divi1.append($InfoHeader)
+        .append($twitterinfo)
+        .append($marketsupply)
+        .append($marketCap);
+}
+const createButtonDiv2 = function($divi_2) {
+    let $bbutton = $("<button>").addClass("bb").text("Back-Test");
+    $divi_2.append('<p class="textdate">DATE');
+    $divi_2.append('<input type="date" class="date" placeholder="hello">');
+    $divi_2.append('<p class="amount">amount');
+    $divi_2.append('<input type="text" class="amountin">');
+    $divi_2.append($bbutton);
 }
