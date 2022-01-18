@@ -92,6 +92,7 @@ const retTicker = async function(userinput) {
 //it populates the information inside the boxes
 const populateInfoInsideBoxes = async function() {
     let $a,
+        $price,
         text_val,
         countofElement = 0,
         coinRank,
@@ -110,7 +111,9 @@ const populateInfoInsideBoxes = async function() {
             $a = $("<a>").addClass("tickerText")
                 .attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
                 .text(text_val);
-            divObjects[coins - 1].append($a);
+            $price = $("<p>").addClass("currprice").text("US:$" + coinlist[countofElement].current_price);
+            divObjects[coins - 1].append($a)
+                .append($price);
             coins++;
             count++;
             countofElement = 0;

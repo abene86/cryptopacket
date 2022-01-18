@@ -33,12 +33,19 @@ header {
     justify-content: space-around;
     background-color: antiquewhite;
     opacity: 85%;
+    align-content: center;
     /* border-top-right-radius: 10px;
     border-bottom-right-radius: 30px; */
     border-radius: 12px;
     box-shadow: 0px 5px 3px 0px;
     width: 100px;
     height: 69px;
+}
+
+.currprice {
+    margin-top: 0px;
+    color: green;
+    font-size: 14px;
 }
 
 .iconImage {
@@ -58,7 +65,6 @@ main {
     font-size: 20px;
     color: black;
     text-decoration: none;
-    padding: 10px;
 }
 
 .bigtitles {
@@ -121,9 +127,30 @@ body {
     margin-top: 20px;
     margin-bottom: 10px;
     /* border: #000000 solid 1px; */
+    display: flex;
+    justify-content: space-evenly;
     height: 50px;
     width: 800px;
     margin-bottom: 2px;
+}
+
+.logoimg {
+    margin-right: 2px;
+}
+
+.infoH {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.infocoinH {
+    display: grid;
+    align-content: space-between;
+}
+
+.logotitleareas {
+    display: grid;
+    justify-items: center;
 }
 
 .title2 {
