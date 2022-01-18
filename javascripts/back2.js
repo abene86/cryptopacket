@@ -7,6 +7,9 @@ let urla = decodeURIComponent(urls[0]);
 let xtime = [];
 let yprice = [];
 let dataobj = [];
+let total = [];
+let totalv = [];
+//let bdata = {}; // store data for back testing
 const coinname = decodeURIComponent(urls[2]);
 console.log("!!!!!!!!!!!!");
 console.log(coinname);
@@ -66,6 +69,22 @@ var main2 = function() {
         console.log(val);
         retTicker(val);
     });
+    $(".bb").on("click", function(event) {
+        console.log("helloworld");
+        start = $(".date").val();
+        start = new Date(start.split("-").join(".")).getTime()/1000;
+        amounts = $(".amountin").val();
+        console.log(start);
+        console.log(amounts);
+        if(amounts === "" || start === ""){
+            alert("please input the correct value.");
+        }
+        //should find out date is valid some coin history start in 2017 if user put 2000
+        else{
+            backtesting(start, amounts);
+        }
+
+    });
 };
 const setUpHDIV_Data = function($divH) {
     let $text = $("<h3>").addClass("title2")
@@ -75,6 +94,15 @@ const setUpHDIV_Data = function($divH) {
 const setUpIDivData = function($divi) {
     let $divi_1 = $("<div>").addClass("infoDiv1");
     let $divi_2 = $("<div>").addClass("infoDiv2");
+    let $bbutton = $("<button>").addClass("bb").text("Back-Test");
+    $divi_2.append('<p class="textdate">DATE');
+    $divi_2.append('<input type="date" class="date" placeholder="hello">');
+    $divi_2.append('<p class="amount">amount');
+    $divi_2.append('<input type="text" class="amountin">');
+    $divi_2.append($bbutton);
+
+    //let $inday = $("<input>").attr("type", "date");
+    //$divi_2.append(day);
     $divi.append($divi_1);
     $divi.append($divi_2);
 }
@@ -86,6 +114,111 @@ const setUpIDivData = function($divi) {
         .append($button2)
         .append($button3);
 
+}*/
+const gettotaldata = async function(time) {
+    let totalapi = 'https://api.coingecko.com/api/v3/coins/'+coinname+'/market_chart/range?vs_currency=usd&from='+time+'&to=1641852359543';
+    console.log("AAAAAAAAAA");
+    console.log(total);
+    let response = await fetch(urlapi,{
+        method: "GET",
+    });
+    let dataproc  = await response.json();
+    for(let i = 0; i<dataproc.prices.length; i++){
+        total.push({
+            key: dataproc.prices[i][0],
+            value: dataproc.prices[i][1]
+        });
+    }
+
+
+}
+const backtesting = async function(time, amount){
+    total = [];
+    totalv = [];
+    // add becktesting here...
+    await gettotaldata(time);
+    for(let i = 0; i<total.length; i++){
+        totalv.push({
+            key: total[i].key,
+            value: total[i].value * amount
+        });
+    }
+    for(let j = 0; j<totalv.length; j++){
+        console.log(totalv[j].key + ":  " + totalv[j].value);
+    }
+    // estimated price of coin at the time.
+    /*let value = 0;
+    let coinindex = 0;
+    let len = total.length;
+
+    // corner cases
+    if(time <= total[0].key){
+        coinindex = 0;
+        value = total[0].value;
+    }
+    if(time >= total[len-1].key){
+        coinindex= len-1;
+        value = total[len-1].value;
+    }
+
+    let i = 0, j = len, mid =0;
+    while(i<j){
+
+        mid = Math.floor((i+j)/2);
+        console.log("mid " +mid);
+        if(total[mid].key === time){
+            coinindex = mid;
+            value = total[mid].value;
+        }
+
+        if(total[mid].key > time){
+            if(mid > 0 && time > total[mid-1].key){
+                let num = await getnum(total[mid-1].key,total[mid].key,time);
+                if(num ===0){
+                    coinindex = mid;
+                    value = total[mid].value;
+                }
+                else{
+                    coinindex = mid-1;
+                    value = total[mid-1].value;
+                }
+            }
+            j = mid;
+        }
+        else{
+            if(mid< len -1 && time <  total[mid+1].key){
+                let num = await getnum(total[mid].key,total[mid+1].key,start);
+                if(num ===0){
+                    coinindex = mid+1;
+                    value = total[mid+1].value;
+                }
+                else{
+                    coinindex = mid;
+                    value = total[mid].value;
+                }
+            }
+            i = mid +1;
+        }
+        
+    }
+    console.log("!!!!!!!!!!!!!!!");
+    console.log(total[coinindex].key);
+    console.log(value);
+    console.log(time);*/
+    /*for(let i = 0; i<total.length; i++){
+        console.log("%%%%%%%%%%%%%%%");
+        console.log(total[i].key);
+        console.log(total[i].value);
+    }*/
+}
+
+/*const getnum = async function (val1, val2, start){
+    if(start - val1 >= val2 - start){
+        return 0;
+    }
+    else{
+        return 1;
+    }
 }*/
 
 const formatData = data => {

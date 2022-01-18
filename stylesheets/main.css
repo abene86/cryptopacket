@@ -167,12 +167,14 @@ body {
 
 .infoDiv2 {
     border: black solid 1px;
+    display: flex;
     margin-top: 10px;
     height: 180px;
     width: 350px;
     margin-bottom: 10px;
     margin-right: 1px;
     box-shadow: 0px 5px 2px 0px;
+    flex-direction: column;
 }
 
 .divButton {
@@ -199,4 +201,12 @@ body {
 .button3 {
     height: 20px;
     width: 70px;
+}
+
+.textdate{
+    text-align: center;
+}
+
+.date {
+
 }
