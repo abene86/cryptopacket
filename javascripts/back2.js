@@ -1,10 +1,13 @@
-let url = window.location.href,
+let coin_data = [],
+    url = window.location.href,
     urls = url.split("=", 3),
     urla = decodeURIComponent(urls[0]),
     xtime = [],
     yprice = [],
-    dataobject = [],
-    coininfo = [];
+    dataobj = [],
+    total = [],
+    totalv = [];
+
 const coinname = decodeURIComponent(urls[2]);
 const ticker = decodeURIComponent(urls[1]);
 let urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=7'
@@ -60,14 +63,14 @@ const getDataInfo = async function() {
     //index 0-image(size small) 1-desc about the coin 2-the rank of the coin
     //index 3 holds the current price of the coin index 4 holds the market cap of the coin
     //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
-    coininfo.push(datax.image.small)
-    coininfo.push(datax.description.en)
-    coininfo.push(datax.coingecko_rank);
-    coininfo.push(datax.market_data.current_price.usd);
-    coininfo.push(datax.market_data.market_cap.aed);
-    coininfo.push(datax.market_data.max_supply)
-    coininfo.push(datax.community_data.twitter_followers);
-    console.log(coininfo);
+    coin_data.push(datax.image.small)
+    coin_data.push(datax.description.en)
+    coin_data.push(datax.coingecko_rank);
+    coin_data.push(datax.market_data.current_price.usd);
+    coin_data.push(datax.market_data.market_cap.aed);
+    coin_data.push(datax.market_data.max_supply)
+    coin_data.push(datax.community_data.twitter_followers);
+    console.log(coin_data);
 
 }
 
@@ -80,7 +83,7 @@ const getDataGraph = async function() {
         xtime.push(dataproc.prices[i][0]);
         yprice.push(dataproc.prices[i][1]);
     }
-}
+};
 
 const setUpHDIV_Data = async function($divH) {
     await getDataInfo();
@@ -94,19 +97,19 @@ const setUpHDIV_Data = async function($divH) {
     $coinTick = $("<h3>").addClass("title2")
         .text(ticker + "/USD");
     $coinlogo = $("<img>").addClass("logoimg")
-        .attr("src", coininfo[0]);
+        .attr("src", coin_data[0]);
     $infodiv2 = $("<div>").addClass("logotitleareas")
         .append($coinlogo)
         .append($coinTick);
     $priceinfo = $("<p>")
         .addClass("infoH")
-        .text("Current Price USD:$" + coininfo[3]);
+        .text("Current Price USD:$" + coin_data[3]);
     $coinrank = $("<p>")
         .addClass("infoH")
-        .text("Rank:" + coininfo[2]);
+        .text("Rank:" + coin_data[2]);
     $twitterinfo = $("<p>")
         .addClass("infoH")
-        .text("Twitter Followers:" + coininfo[6]);
+        .text("Twitter Followers:" + coin_data[6]);
     $infodiv = $("<div>").addClass("infocoinH")
         .append($twitterinfo)
         .append($priceinfo)
@@ -118,9 +121,19 @@ const setUpHDIV_Data = async function($divH) {
 const setUpIDivData = async function($divi) {
     let $divi_1 = $("<div>").addClass("infoDiv1");
     let $divi_2 = $("<div>").addClass("infoDiv2");
+    let $bbutton = $("<button>").addClass("bb").text("Back-Test");
+    $divi_2.append('<p class="textdate">DATE');
+    $divi_2.append('<input type="date" class="date" placeholder="hello">');
+    $divi_2.append('<p class="amount">amount');
+    $divi_2.append('<input type="text" class="amountin">');
+    $divi_2.append($bbutton);
+
+    //let $inday = $("<input>").attr("type", "date");
+    //$divi_2.append(day);
     $divi.append($divi_1);
     $divi.append($divi_2);
 }
+
 
 const formatData = data => {
     return data.map(el => {
