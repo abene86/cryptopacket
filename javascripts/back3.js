@@ -10,6 +10,7 @@ let totaly = [];
 let numofcoins;
 let price;
 console.log(start + " : "+ amount);
+/* upadated */
 
 let main3 = function() {
     let $divh = $("<div>").addClass("head"),
