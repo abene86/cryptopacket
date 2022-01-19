@@ -14,17 +14,31 @@ console.log(start + " : "+ amount);
 let main3 = function() {
     let $divh = $("<div>").addClass("head"),
         $divG = $("<div>").addClass("graph"),
+        $dive = $("<div>").addClass("line"),
         $divI = $("<div>").addClass("info");
     let $port = $("<h3>").addClass("portf").text("Your portfolio: ");
+   // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
     $divh.append($port);
+   // $dive.append($line);
     backtesting(start,amount,$divG);
     //addgraph
-    insertData($divI);
+    setUpIDiv($divI);
     $mainDiv = $("<div>").addClass("mainDiv");
     $mainDiv.append($divh)
             .append($divG)
+            .append($dive)
             .append($divI);
     $(".main3").append($mainDiv);
+}
+
+const setUpIDiv = function($divI) {
+    totalx = [];
+    totaly = [];
+    let $divs = $("<div>").addClass("currinfo");
+    insertData($divs);
+    //insertDatas($divs);
+    //createButtonDiv2($divi_2);
+    $divI.append($divs);
 }
 
 const gettotaldata = async function(time) {
@@ -33,6 +47,7 @@ const gettotaldata = async function(time) {
         method: "GET",
     });
     let dataproc  = await response.json();
+    console.log(dataproc);
     price = dataproc.prices[0][1];
     numofcoins = amount/dataproc.prices[0][1];
     for(let i = 0; i<dataproc.prices.length; i++){
@@ -120,20 +135,42 @@ const backtesting = async function(time, amount,$divG){
     
 }
 
-const insertData = async function($divI) {
+const insertData = async function($divc) {
     await gettotaldata(start);
     console.log(numofcoins);
     let $info = $("<h3>").addClass("data").text("Estimated Position");
     let $numcoin = $("<p>").addClass("numcoin").text("Total: "+ numofcoins.toFixed(8) + tic);
     let $avg = $("<p>").addClass("avg").text("Average price: $" + price.toFixed(2));
-    let $mv = $("<p>").addClass("mv").text("Market value: " + (numofcoins*totaly[totaly.length-1]).toFixed(2));
-    let $ret = $("<p>").addClass("ret").text("Total Return: " + (((numofcoins*totaly[totaly.length-1])/amount)*100).toFixed(2) + "%");
-    $divI.append($info)
+    let $mv = $("<p>").addClass("mv").text("Market value: " + (totaly[totaly.length-1]).toFixed(2));
+    let $ret;
+    if(amount <= totaly[totaly.length-1]){
+        console.log("222222");
+        $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");
+    }
+    else{
+        console.log("1111111");
+        console.log(totaly[totaly.length-1]);
+        $ret = $("<p>").addClass("ret").text("Total Return: -" + ((1-(totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");
+    }
+    $divc.append($info)
         .append($numcoin)
         .append($avg)
         .append($mv)
         .append($ret);
 }
+
+/*const insertDatas = async function($divs){
+    await gettotaldata(start);
+    let $info = $("<h3>").addClass("data").text("Starting Position");
+    let $numcoin = $("<p>").addClass("numcoin").text("Amount bought: "+ numofcoins.toFixed(8) + tic);
+    let $avg = $("<p>").addClass("avg").text("Average price: $" + price.toFixed(2));
+    let $mv = $("<p>").addClass("mv").text("Market value: $" + amount);
+    $divs.append($info)
+        .append($numcoin)
+        .append($avg)
+        .append($mv);
+
+}*/
 
 
 

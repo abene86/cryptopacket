@@ -7,7 +7,13 @@ let coin_data = [],
     dataobj = [],
     total = [],
     totalv = [];
-
+let startdate;
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, '0');
+let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+let yyyy = today.getFullYear();
+today = new Date(mm + '.' + dd + '.' + yyyy).getTime() / 1000;
+console.log(today);
 const coinname = decodeURIComponent(urls[2]);
 const ticker = decodeURIComponent(urls[1]);
 let urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=7'
@@ -49,11 +55,27 @@ var main2 = function() {
         .append($divg)
         .append($divi);
     $(".main2").append($mainD);
+    getstartdate();
+    
 
+
+};
+
+$(document).ready(main2);
+
+const getstartdate = async function() {
+    let urli = 'https://api.coingecko.com/api/v3/coins/' + coinname; + '/history';
+    let rawdata = await fetch(urli);
+    let datas = await rawdata.json();
+    startdate = datas.genesis_date;
     $(".bb").on("click", function(event) {
+        console.log(startdate);
         console.log("helloworld");
         start = $(".date").val();
         start = new Date(start.split("-").join(".")).getTime() / 1000;
+        if(typeof(startdate) === "string"){
+            startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
+        }
         amounts = $(".amountin").val();
         console.log(start);
         console.log(amounts);
@@ -61,22 +83,22 @@ var main2 = function() {
         if (amounts === "" || start === "") {
             alert("please input the correct value.");
         }
+        else if (start > today || start < startdate){
+            alert("invalid date");
+        }
         //should find out date is valid some coin history start in 2017 if user put 2000
         else {
             window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" + ticker;
         }
 
     });
-
-
-};
-
-$(document).ready(main2);
+}
 
 const getDataInfo = async function() {
     let url = 'https://api.coingecko.com/api/v3/coins/' + coinname; + '/history';
     let rawdata = await fetch(url);
     let datax = await rawdata.json();
+    
     console.log(datax);
     //depending on the index of the array we hold informations
     //index 0-image(size small) 1-desc about the coin 2-the rank of the coin
@@ -125,7 +147,7 @@ const setUpHDIV_Data = async function($divH) {
         .attr("src", coin_data[0]);
     $priceChange24 = $("<p>").addClass("infoH")
         .text("Price Change 24HR: ")
-    $span = $("<span>").text(coin_data[7]);
+    $span = $("<span>").text("$"+coin_data[7].toFixed(2));
     $priceChange24.append($span);
     if (coin_data[7] < 0) {
         $span.css("color", "red");
@@ -137,16 +159,16 @@ const setUpHDIV_Data = async function($divH) {
     $coinrank = $("<p>")
         .addClass("infoK")
         .text("Rank:" + coin_data[2]);
+    $infodiv2_rank = $("<div>")
+        .addClass("infoDiv2Rank")
+        .append($coinTick)
+        .append($coinrank);
     $infodiv2_logo = $("<div>")
         .addClass("logotitleareas")
         .append($coinlogo)
-        .append($coinTick);
-    $infodiv2_rank = $("<div>").addClass("coinRank")
-        .addClass("infoDiv2Rank")
-        .append($coinrank);
-    $infodiv2 = $("<div>").addClass("wholeLogoHeader")
-        .append($infodiv2_logo)
         .append($infodiv2_rank);
+    $infodiv2 = $("<div>").addClass("wholeLogoHeader")
+        .append($infodiv2_logo);
 
     $priceinfo = $("<p>")
         .addClass("infoH")
