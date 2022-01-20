@@ -1,5 +1,5 @@
 let curr = window.location.href;
-let currurl = curr.split("=",5);
+let currurl = curr.split("=",6);
 let urlf = decodeURIComponent(currurl[0]);
 let start = decodeURIComponent(currurl[1]);
 let amount = decodeURIComponent(currurl[2]);
@@ -9,13 +9,18 @@ let totalx = [];
 let totaly = [];
 let numofcoins;
 let price;
+let startdate = decodeURIComponent(currurl[5]);
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, '0');
+let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+let yyyy = today.getFullYear();
+today = new Date(mm + '.' + dd + '.' + yyyy).getTime() / 1000;
 console.log(start + " : "+ amount);
 /* upadated */
 
 let main3 = function() {
     let $divh = $("<div>").addClass("head"),
         $divG = $("<div>").addClass("graph"),
-        $dive = $("<div>").addClass("line"),
         $divI = $("<div>").addClass("info");
     let $port = $("<h3>").addClass("portf").text("Your portfolio: ");
    // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
@@ -27,19 +32,48 @@ let main3 = function() {
     $mainDiv = $("<div>").addClass("mainDiv");
     $mainDiv.append($divh)
             .append($divG)
-            .append($dive)
             .append($divI);
     $(".main3").append($mainDiv);
+    $(".bb").on("click", function(event) {
+        console.log(startdate);
+        console.log("helloworld");
+        start = $(".date").val();
+        start = new Date(start.split("-").join(".")).getTime() / 1000;
+       /* if(typeof(startdate) === "string"){
+            startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
+        }*/
+        console.log(startdate);
+        amounts = $(".amountin").val();
+        console.log(start);
+        console.log(amounts);
+        /*while(true){
+
+        }*/
+        //current date must be checked and.
+        if (amounts === "" || start === "") {
+            alert("please input the correct value.");
+        }
+        else if (start > today || start < startdate){
+            alert("invalid date");
+        }
+        //should find out date is valid some coin history start in 2017 if user put 2000
+        else {
+            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + namecoin + "=" + tic + "="+ startdate;
+        }
+
+    });
 }
 
 const setUpIDiv = function($divI) {
     totalx = [];
     totaly = [];
     let $divs = $("<div>").addClass("currinfo");
+    let $divsearch = $("<div>").addClass("searching");
     insertData($divs);
     //insertDatas($divs);
-    //createButtonDiv2($divi_2);
-    $divI.append($divs);
+    createButtonDiv2($divsearch);
+    $divI.append($divs)
+        .append($divsearch);
 }
 
 const gettotaldata = async function(time) {
@@ -58,6 +92,9 @@ const gettotaldata = async function(time) {
 
 
 }
+
+
+
 const backtesting = async function(time, amount,$divG){
     totalx = [];
     totaly = [];
@@ -143,8 +180,8 @@ const insertData = async function($divc) {
     let $numcoin = $("<p>").addClass("numcoin").text("Total: "+ numofcoins.toFixed(8) + tic);
     let $avg = $("<p>").addClass("avg").text("Average price: $" + price.toFixed(2));
     let $mv = $("<p>").addClass("mv").text("Market value: " + (totaly[totaly.length-1]).toFixed(2));
-    let $ret;
-    if(amount <= totaly[totaly.length-1]){
+    let $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount)-1)*100).toFixed(2) +"%");
+    /*if(amount <= totaly[totaly.length-1]){
         console.log("222222");
         $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");
     }
@@ -152,12 +189,24 @@ const insertData = async function($divc) {
         console.log("1111111");
         console.log(totaly[totaly.length-1]);
         $ret = $("<p>").addClass("ret").text("Total Return: -" + ((1-(totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");
-    }
+    }*/
     $divc.append($info)
         .append($numcoin)
         .append($avg)
         .append($mv)
         .append($ret);
+}
+
+const createButtonDiv2 = function($divi_2) {
+    let $header = $("<h4>").addClass("divi_2Header")
+        .text("Back Testing");
+    let $bbutton = $("<button>").addClass("bb").text("Search");
+    $divi_2.append($header)
+    $divi_2.append('<p class="textdate">Enter date:');
+    $divi_2.append('<input type="date" class="date" placeholder="hello">');
+    $divi_2.append('<p class="amount">Enter the amount in US($):');
+    $divi_2.append('<input type="text" class="amountin">');
+    $divi_2.append($bbutton);
 }
 
 /*const insertDatas = async function($divs){

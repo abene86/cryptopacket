@@ -88,7 +88,7 @@ const getstartdate = async function() {
         }
         //should find out date is valid some coin history start in 2017 if user put 2000
         else {
-            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" + ticker;
+            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + coinname + "=" + ticker + "=" + startdate;
         }
 
     });
@@ -147,7 +147,14 @@ const setUpHDIV_Data = async function($divH) {
         .attr("src", coin_data[0]);
     $priceChange24 = $("<p>").addClass("infoH")
         .text("Price Change 24HR: ")
-    $span = $("<span>").text("$"+coin_data[7].toFixed(2));
+    if(coin_data[7].toFixed(2) === "0.00"){
+        $span = $("<span>").text("$"+coin_data[7]);
+    }
+    else{
+        console.log("&&&&&&&&&");
+        $span = $("<span>").text("$"+coin_data[7].toFixed(2));
+    }
+    //$span = $("<span>").text("$"+coin_data[7].toFixed(2));
     $priceChange24.append($span);
     if (coin_data[7] < 0) {
         $span.css("color", "red");

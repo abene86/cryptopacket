@@ -112,8 +112,15 @@ const populateInfoInsideBoxes = async function() {
         coinRank = coinlist[countofElement].market_cap_rank;
         if (coinRank === coins) {
             text_val = coinlist[countofElement].symbol.toUpperCase();
-            actprice = coinlist[countofElement].current_price.toFixed(2)
-            actprice = actprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            if(coinlist[countofElement].current_price.toFixed(2) === "0.00"){
+                actprice = coinlist[countofElement].current_price;
+            }
+            else{
+                actprice = coinlist[countofElement].current_price.toFixed(2);
+            }
+            if(actprice > 1){
+                actprice = actprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
             $a = $("<a>").attr("href", "index2.html?=" + text_val + "=" + coinlist[countofElement].id)
                 .addClass("tickerText")
                 .text(text_val);
