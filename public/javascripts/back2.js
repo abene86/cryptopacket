@@ -85,8 +85,10 @@ const getstartdate = async function() {
             startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
         }
         amounts = $(".amountin").val();
+        console.log("!!!!!!!!!!!!");
         console.log(start);
         console.log(amounts);
+        console.log("!!!!!!!!!!!!");
         //current date must be checked and.
         if (amounts === "" || start === "") {
             alert("please input the correct value.");
@@ -127,7 +129,7 @@ const getDataInfo = async function() {
 }
 
 const getDataGraph = async function(days) {
-    let urlapi = `/graphdata/${coinname}, ${days}`;
+    let urlapi = `/graphdata/${coinname},${days}`;
     let response = await fetch(urlapi);
     let dataproc = await response.json();
     for (let i = 0; i < dataproc.prices.length; i++) {

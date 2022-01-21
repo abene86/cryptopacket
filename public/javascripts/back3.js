@@ -26,6 +26,7 @@ let main3 = function() {
     // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
     $divh.append($port);
     // $dive.append($line);
+    console.log(start + " must be buying time");
     backtesting(start, amount, $divG);
     //addgraph
     setUpIDiv($divI);
@@ -77,7 +78,10 @@ const setUpIDiv = function($divI) {
 
 const gettotaldata = async function(time) {
     //let totalapi = 'https://api.coingecko.com/api/v3/coins/' + namecoin + '/market_chart/range?vs_currency=usd&from=' + time + '&to=1641852359543';
-    let totalapi = `/gettotal/${namecoin}, ${time}`;
+    console.log(namecoin);
+    console.log("hellooo"+time);
+    //let urlapi = `/graphdata/${coinname}, ${days}`;
+    let totalapi = `/gettotal/${namecoin},${time},${today}`;
     console.log(totalapi);
     let response = await fetch(totalapi);
     let dataproc = await response.json();
@@ -99,6 +103,7 @@ const backtesting = async function(time, amount, $divG) {
     totalx = [];
     totaly = [];
     // add becktesting here...
+    console.log(time +" hhhhhhhhh");
     await gettotaldata(time);
     console.log(numofcoins);
     $divG.empty();
@@ -172,6 +177,7 @@ const backtesting = async function(time, amount, $divG) {
 }
 
 const insertData = async function($divc) {
+    console.log(start + "what is htisss");
     await gettotaldata(start);
     console.log(numofcoins);
     let $info = $("<h3>").addClass("data").text("Estimated Position");
