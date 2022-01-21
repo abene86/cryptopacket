@@ -41,7 +41,8 @@ const createDyMainArea = function() {
             text;
 
         mainDiv = $("<div>").addClass("holdMainContent");
-        text = $("<p>Easily Access Info about your favorite coins</p>");
+        text = $("<p>Easily Access uptodate and current information about your favorite coins at your comfort of a single click:)</p>")
+            .css("font-family", "roboto condensed");
         titles = $("<h1>").text("CryptoPackets").addClass("maintitle");
         $(".main1").append(mainDiv);
         $(mainDiv).append(titles)

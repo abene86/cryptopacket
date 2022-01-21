@@ -109,12 +109,15 @@ const getDataInfo = async function() {
     let rawdata = await fetch(url_api);
     let datax = await rawdata.json();
 
-    console.log("hello world" + datax);
+    //console.log(datax);
     //depending on the index of the array we hold informations
     //index 0-image(size small) 1-desc about the coin 2-the rank of the coin
     //index 3 holds the current price of the coin index 4 holds the market cap of the coin
     //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
-    coin_data.push(datax.image.small)
+    //index 7 holds the information about the market price
+    //index 8 holds information about the genesis date
+    //index9 holds about the market volume and 10 holds about the public score.
+    coin_data.push(datax.image.large)
     coin_data.push(datax.description.en)
     coin_data.push(datax.market_data.market_cap_rank);
     coin_data.push(datax.market_data.current_price.usd.toLocaleString('en-US'));
@@ -123,8 +126,10 @@ const getDataInfo = async function() {
     coin_data.push(datax.community_data.twitter_followers.toLocaleString('en-US'));
     coin_data.push(datax.market_data.price_change_24h);
     coin_data.push(datax.genesis_date);
+    coin_data.push(datax.market_data.total_volume.usd.toLocaleString('en-US'));
+    coin_data.push(datax.public_interest_score.toLocaleString('en-US'));
     console.log("genesis start time" + coin_data[8]);
-    console.log(coin_data);
+    //console.log(coin_data);
 
 }
 
@@ -170,7 +175,7 @@ const setUpHDIV_Data = async function($divH) {
     } else if (coin_data[7] > 0) {
         $span.css("color", "green");
     } else {
-        $span.css("color", yellow);
+        $span.css("color", "yellow");
     }
     $coinrank = $("<p>")
         .addClass("infoK")
@@ -189,8 +194,6 @@ const setUpHDIV_Data = async function($divH) {
     $priceinfo = $("<p>")
         .addClass("infoH")
         .text("Current Price USD:$" + coin_data[3]);
-
-
     $twitterinfo = $("<p>")
         .addClass("infoH")
     $infodiv = $("<div>").addClass("infocoinH")
@@ -199,7 +202,6 @@ const setUpHDIV_Data = async function($divH) {
     $divH.append($infodiv2)
         .append($infodiv)
 }
-
 const formatData = data => {
         return data.map(el => {
             return {
@@ -287,16 +289,22 @@ const applyinfoDiv1 = async function(divi1) {
     //index 5 holds the market supply of the coin  index6 holds info  about twitter followers
     await getDataInfo();
     let $InfoHeader = $("<h3>").addClass("headerInfoDIv")
-        .text("Information: ");
+        .text("Information ");
     let $twitterinfo = $("<p>").addClass("infodivT")
         .text("Twitter followers: " + " " + coin_data[6]);
     let $marketCap = $("<p>").addClass("infodivT")
         .text("MarketCap: " + " " + coin_data[4]);
     let $marketsupply = $("<p>").addClass("infodivT")
         .text("Market Supply: " + " " + coin_data[5]);
+    let $marketvolume = $("<p>").addClass("infodivT")
+        .text("Total Market Volume: " + coin_data[9]);
+    let $publicinterest = $("<p>").addClass("infodivT")
+        .text("Public Interest Score: " + coin_data[10]);
     divi1.append($InfoHeader)
         .append($twitterinfo)
+        .append($publicinterest)
         .append($marketsupply)
+        .append($marketvolume)
         .append($marketCap);
 }
 const createButtonDiv2 = function($divi_2) {

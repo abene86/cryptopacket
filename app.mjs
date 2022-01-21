@@ -18,16 +18,17 @@ app.get('/history/:coinid', async(request2, response2) => {
     let url = 'https://api.coingecko.com/api/v3/coins/' + coinname; + '/history';
     let rawdata = await fetch(url);
     let datax3 = await rawdata.json();
+    //console.log(datax3);
     response2.json(datax3);
 });
 
 app.get('/graphdata/:data', async(request3, response3) => {
     let data = request3.params.data.split(',');
-    console.log("hello" + data);
+    //console.log("hello" + data);
     let coinname = data[0];
     console.log(coinname);
     let date = data[1];
-    console.log(data);
+    //console.log(data);
     let urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=' + date;
     console.log(urlapi);
     let response = await fetch(urlapi, {
@@ -41,17 +42,17 @@ app.get('/gettotal/:data1', async(request4, response4) => {
     console.log("HERE in back3.js");
     let data1 = request4.params.data1.split(',');
     let namecoin = data1[0];
-    console.log(namecoin);
+    //console.log(namecoin);
     let time = data1[1];
     let day = data1[2];
-    console.log("aaaaa"+time);
+    //console.log("aaaaa" + time);
     let totalapi = 'https://api.coingecko.com/api/v3/coins/' + namecoin + '/market_chart/range?vs_currency=usd&from=' + time + '&to=' + day;
-    console.log(totalapi);
+    //console.log(totalapi);
     let response0 = await fetch(totalapi, {
         method: "GET",
     });
     let dataproc3 = await response0.json();
-    console.log(totalapi);
+    //console.log(totalapi);
     console.log("hello" + dataproc3);
     response4.json(dataproc3);
 });

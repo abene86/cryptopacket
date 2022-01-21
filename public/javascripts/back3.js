@@ -22,12 +22,13 @@ let main3 = function() {
     let $divh = $("<div>").addClass("head"),
         $divG = $("<div>").addClass("graph"),
         $divI = $("<div>").addClass("info");
-    let $port = $("<h3>").addClass("portf").text("Your portfolio: ");
+
     // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
-    $divh.append($port);
+
     // $dive.append($line);
     console.log(start + " must be buying time");
-    backtesting(start, amount, $divG);
+    backtesting(start, amount, $divG, $divh);
+
     //addgraph
     setUpIDiv($divI);
     $mainDiv = $("<div>").addClass("mainDiv");
@@ -79,7 +80,7 @@ const setUpIDiv = function($divI) {
 const gettotaldata = async function(time) {
     //let totalapi = 'https://api.coingecko.com/api/v3/coins/' + namecoin + '/market_chart/range?vs_currency=usd&from=' + time + '&to=1641852359543';
     console.log(namecoin);
-    console.log("hellooo"+time);
+    console.log("hellooo" + time);
     //let urlapi = `/graphdata/${coinname}, ${days}`;
     let totalapi = `/gettotal/${namecoin},${time},${today}`;
     console.log(totalapi);
@@ -99,12 +100,15 @@ const gettotaldata = async function(time) {
 
 
 
-const backtesting = async function(time, amount, $divG) {
+const backtesting = async function(time, amount, $divG, $divh) {
     totalx = [];
     totaly = [];
     // add becktesting here...
-    console.log(time +" hhhhhhhhh");
+    console.log(time + " hhhhhhhhh");
     await gettotaldata(time);
+    console.log(price);
+    let $port = $("<h3>").addClass("portf").text("Your portfolio: $" + (totaly[totaly.length - 1]).toFixed(2));
+    $divh.append($port);
     console.log(numofcoins);
     $divG.empty();
     let CanvasElement = $('<canvas/>', { 'width': 400, 'height': 400, 'id': 'mychart' });
@@ -119,7 +123,7 @@ const backtesting = async function(time, amount, $divG) {
                 backgroundColor: 'rgba(102, 178, 255, 0.4)',
                 borderColor: 'rgba(0, 0, 255, 0.4)',
 
-                pointRadius: 0,
+                //pointRadius: 0.5,
                 fill: {
                     target: 'origin',
                     above: 'rgb(102, 178, 255)', // Area will be red above the origin
@@ -138,7 +142,7 @@ const backtesting = async function(time, amount, $divG) {
             lineHeightAnnotation: {
                 always: true,
                 hover: false,
-                lineWeight: 1.5
+                lineWeight: 1
             },
             animation: {
                 duration: 2000
@@ -181,10 +185,13 @@ const insertData = async function($divc) {
     await gettotaldata(start);
     console.log(numofcoins);
     let $info = $("<h3>").addClass("data").text("Estimated Position");
-    let $numcoin = $("<p>").addClass("numcoin").text("Total: " + numofcoins.toFixed(8) + tic);
-    let $avg = $("<p>").addClass("avg").text("Average price: $" + price.toFixed(2));
-    let $mv = $("<p>").addClass("mv").text("Market value: " + (totaly[totaly.length - 1]).toFixed(2));
-    let $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length - 1] / amount) - 1) * 100).toFixed(2) + "%");
+    //let span2=("<span>").text("")
+    let $numcoin = $("<p>").addClass("numcoin").text("Total: " + numofcoins.toFixed(8));
+    let span = $("<span>").text(" " + tic);
+    $numcoin.append(span);
+    let $avg = $("<p>").addClass("numcoin").text("Average price: $" + price.toFixed(2));
+    let $mv = $("<p>").addClass("numcoin").text("Market value: $" + (totaly[totaly.length - 1]).toFixed(2));
+    let $ret = $("<p>").addClass("numcoin").text("Total Return: " + (((totaly[totaly.length - 1] / amount) - 1) * 100).toFixed(2) + "%");
     /*if(amount <= totaly[totaly.length-1]){
         console.log("222222");
         $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");

@@ -21,9 +21,9 @@ header {
 .maintitle {
     text-align: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 90px;
     font-family: "shizuru";
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .boxInside {
@@ -83,7 +83,6 @@ main {
     border-top-left-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    box-shadow: 0px 2px 0px 2px;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
@@ -144,6 +143,8 @@ body {
 
 .logoimg {
     margin-right: 2px;
+    height: 65px;
+    width: 65px;
 }
 
 .infoH {
@@ -164,7 +165,8 @@ body {
 }
 
 .title2 {
-    font-family: "Roboto Condensed";
+    font-family: "bungee";
+    font-size: 18px;
     margin-left: 6px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -206,7 +208,7 @@ body {
     height: 220px;
     width: 350px;
     display: grid;
-    align-content: space-evenly;
+    align-content: stretch;
     margin-bottom: 10px;
     margin-right: 1px;
     box-shadow: 0px 5px 2px 0px;
@@ -217,6 +219,7 @@ body {
     font-size: 16px;
     margin-bottom: 2px;
     margin-top: 2px;
+    text-align: center;
 }
 
 .infoDiv2Rank {
@@ -314,6 +317,14 @@ body {
     box-shadow: 0px 5px 2px 0px;
 }
 
+.data {
+    font-family: 'Bungee';
+    font-size: 16px;
+    margin-top: 2px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
 .info {
     height: 200px;
     display: flex;
@@ -327,7 +338,7 @@ body {
 
 .currinfo {
     border: black solid 1px;
-    display: flex;
+    display: grid;
     margin-top: 30px;
     height: 270px;
     width: 350px;
@@ -335,7 +346,17 @@ body {
     margin-right: 1px;
     /*box-shadow: 0px 5px 2px 0px;*/
     flex-direction: column;
-    align-items: center
+}
+
+.numcoin {
+    margin-left: 5px;
+    margin-top: 12px;
+    margin-bottom: 13px;
+    font-family: "Abel";
+}
+
+.portf {
+    font-family: "bungee";
 }
 
 .searching {
