@@ -1,5 +1,5 @@
 let curr = window.location.href;
-let currurl = curr.split("=",6);
+let currurl = curr.split("=", 6);
 let urlf = decodeURIComponent(currurl[0]);
 let start = decodeURIComponent(currurl[1]);
 let amount = decodeURIComponent(currurl[2]);
@@ -15,7 +15,7 @@ let dd = String(today.getDate()).padStart(2, '0');
 let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 let yyyy = today.getFullYear();
 today = new Date(mm + '.' + dd + '.' + yyyy).getTime() / 1000;
-console.log(start + " : "+ amount);
+console.log(start + " : " + amount);
 /* upadated */
 
 let main3 = function() {
@@ -23,25 +23,25 @@ let main3 = function() {
         $divG = $("<div>").addClass("graph"),
         $divI = $("<div>").addClass("info");
     let $port = $("<h3>").addClass("portf").text("Your portfolio: ");
-   // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
+    // let $line = $("<h3>").addClass("eline").text("Esitmated Position");
     $divh.append($port);
-   // $dive.append($line);
-    backtesting(start,amount,$divG);
+    // $dive.append($line);
+    backtesting(start, amount, $divG);
     //addgraph
     setUpIDiv($divI);
     $mainDiv = $("<div>").addClass("mainDiv");
     $mainDiv.append($divh)
-            .append($divG)
-            .append($divI);
+        .append($divG)
+        .append($divI);
     $(".main3").append($mainDiv);
     $(".bb").on("click", function(event) {
         console.log(startdate);
         console.log("helloworld");
         start = $(".date").val();
         start = new Date(start.split("-").join(".")).getTime() / 1000;
-       /* if(typeof(startdate) === "string"){
-            startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
-        }*/
+        /* if(typeof(startdate) === "string"){
+             startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
+         }*/
         console.log(startdate);
         amounts = $(".amountin").val();
         console.log(start);
@@ -52,13 +52,12 @@ let main3 = function() {
         //current date must be checked and.
         if (amounts === "" || start === "") {
             alert("please input the correct value.");
-        }
-        else if (start > today || start < startdate){
+        } else if (start > today || start < startdate) {
             alert("invalid date");
         }
         //should find out date is valid some coin history start in 2017 if user put 2000
         else {
-            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + namecoin + "=" + tic + "="+ startdate;
+            window.location.href = "index3.html?=" + start + "=" + amounts + "=" + namecoin + "=" + tic + "=" + startdate;
         }
 
     });
@@ -77,15 +76,16 @@ const setUpIDiv = function($divI) {
 }
 
 const gettotaldata = async function(time) {
-    let totalapi = 'https://api.coingecko.com/api/v3/coins/'+namecoin+'/market_chart/range?vs_currency=usd&from='+time+'&to=1641852359543';
-    let response = await fetch(totalapi,{
-        method: "GET",
-    });
-    let dataproc  = await response.json();
+    //let totalapi = 'https://api.coingecko.com/api/v3/coins/' + namecoin + '/market_chart/range?vs_currency=usd&from=' + time + '&to=1641852359543';
+    let totalapi = `/gettotal/${namecoin}, ${time}`;
+    console.log(totalapi);
+    let response = await fetch(totalapi);
+    let dataproc = await response.json();
     console.log(dataproc);
+    console.log("HERE from the api call in back3.js");
     price = dataproc.prices[0][1];
-    numofcoins = amount/dataproc.prices[0][1];
-    for(let i = 0; i<dataproc.prices.length; i++){
+    numofcoins = amount / dataproc.prices[0][1];
+    for (let i = 0; i < dataproc.prices.length; i++) {
         totalx.push(dataproc.prices[i][0]);
         totaly.push(dataproc.prices[i][1] * numofcoins);
     }
@@ -95,7 +95,7 @@ const gettotaldata = async function(time) {
 
 
 
-const backtesting = async function(time, amount,$divG){
+const backtesting = async function(time, amount, $divG) {
     totalx = [];
     totaly = [];
     // add becktesting here...
@@ -111,16 +111,14 @@ const backtesting = async function(time, amount,$divG){
             datasets: [{
                 label: "PORTFOLIO",
                 data: totaly,
-                backgroundColor:
-                    'rgba(102, 178, 255, 0.4)',
-                borderColor: 
-                    'rgba(0, 0, 255, 0.4)', 
+                backgroundColor: 'rgba(102, 178, 255, 0.4)',
+                borderColor: 'rgba(0, 0, 255, 0.4)',
 
                 pointRadius: 0,
                 fill: {
                     target: 'origin',
-                    above: 'rgb(102, 178, 255)',   // Area will be red above the origin
-                    below: 'rgb(102, 178, 255)'    // And blue below the origin
+                    above: 'rgb(102, 178, 255)', // Area will be red above the origin
+                    below: 'rgb(102, 178, 255)' // And blue below the origin
                 }
             }]
         },
@@ -144,13 +142,13 @@ const backtesting = async function(time, amount,$divG){
             responsive: true,
             scales: {
                 xAxis: {
-                        type: 'time',
-                        duration: "linear"
+                    type: 'time',
+                    duration: "linear"
                 },
                 //xAxis: {
                 //    type: "type",
                 //}
-        //         bounds: 'data'
+                //         bounds: 'data'
             },
             plugins: {
                 zoom: {
@@ -167,20 +165,20 @@ const backtesting = async function(time, amount,$divG){
                 }
             }
         },
-        
+
     });
     $divG.append(CanvasElement);
-    
+
 }
 
 const insertData = async function($divc) {
     await gettotaldata(start);
     console.log(numofcoins);
     let $info = $("<h3>").addClass("data").text("Estimated Position");
-    let $numcoin = $("<p>").addClass("numcoin").text("Total: "+ numofcoins.toFixed(8) + tic);
+    let $numcoin = $("<p>").addClass("numcoin").text("Total: " + numofcoins.toFixed(8) + tic);
     let $avg = $("<p>").addClass("avg").text("Average price: $" + price.toFixed(2));
-    let $mv = $("<p>").addClass("mv").text("Market value: " + (totaly[totaly.length-1]).toFixed(2));
-    let $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount)-1)*100).toFixed(2) +"%");
+    let $mv = $("<p>").addClass("mv").text("Market value: " + (totaly[totaly.length - 1]).toFixed(2));
+    let $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length - 1] / amount) - 1) * 100).toFixed(2) + "%");
     /*if(amount <= totaly[totaly.length-1]){
         console.log("222222");
         $ret = $("<p>").addClass("ret").text("Total Return: " + (((totaly[totaly.length-1]/amount))*100).toFixed(2)+"%");

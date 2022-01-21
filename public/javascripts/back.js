@@ -66,7 +66,7 @@ const getdata = async function() {
     // let url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false';
     let rawdata = await fetch('/market_cap_des');
     let datax = await rawdata.json();
-    console.log(datax);
+    //console.log(datax);
     for (let i = 0; i < datax.length; i++) {
         coinlist.push(datax[i]);
     }

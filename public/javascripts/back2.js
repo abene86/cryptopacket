@@ -16,7 +16,8 @@ today = new Date(mm + '.' + dd + '.' + yyyy).getTime() / 1000;
 console.log(today);
 const coinname = decodeURIComponent(urls[2]);
 const ticker = decodeURIComponent(urls[1]);
-let urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=7'
+//let urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=7'
+let days = 1;
 var main2 = function() {
     let $divH = $("<div>").addClass("headerDiv"),
         $divg = $("<div>").addClass("graphDiv"),
@@ -32,21 +33,24 @@ var main2 = function() {
         .append($button3);
     $($button1).on("click", function(event) {
         console.log("aaaaa");
-        urlapi = "https://api.coingecko.com/api/v3/coins/${coinname}/market_chart?vs_currency=usd&days=1";
-        drawGraph($divg);
+        //  urlapi = "https://api.coingecko.com/api/v3/coins/${coinname}/market_chart?vs_currency=usd&days=1";
+        days = 1;
+        drawGraph($divg, days);
     });
     $($button2).on("click", function(event) {
         console.log("bbbbbbb");
-        urlapi = 'https://api.coingecko.com/api/v3/coins/${coinname}/market_chart?vs_currency=usd&days=7';
-        drawGraph($divg);
+        // urlapi = 'https://api.coingecko.com/api/v3/coins/${coinname}/market_chart?vs_currency=usd&days=7';
+        days = 7;
+        drawGraph($divg, days);
     });
     $($button3).on("click", function(event) {
         console.log("cccc");
-        urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=30';
-        drawGraph($divg);
+        // urlapi = 'https://api.coingecko.com/api/v3/coins/' + coinname + '/market_chart?vs_currency=usd&days=30';
+        days = 30;
+        drawGraph($divg, days);
 
     });
-    drawGraph($divg);
+    drawGraph($divg, days);
     setUpIDivData($divi);
     $mainD = $("<div>").addClass("mainContent");
     $mainD.append($divH)
@@ -70,12 +74,14 @@ const getstartdate = async function() {
      */
     await getDataInfo();
     startdate = coin_data[8];
+    console.log("getstartdate" + startdate);
     $(".bb").on("click", function(event) {
         console.log(startdate);
         console.log("helloworld");
         start = $(".date").val();
         start = new Date(start.split("-").join(".")).getTime() / 1000;
         if (typeof(startdate) === "string") {
+            console.log("Inside getstartdate" + startdate);
             startdate = new Date(startdate.split("-").join(".")).getTime() / 1000;
         }
         amounts = $(".amountin").val();
@@ -115,15 +121,14 @@ const getDataInfo = async function() {
     coin_data.push(datax.community_data.twitter_followers.toLocaleString('en-US'));
     coin_data.push(datax.market_data.price_change_24h);
     coin_data.push(datax.genesis_date);
+    console.log("genesis start time" + coin_data[8]);
     console.log(coin_data);
 
 }
 
-const getDataGraph = async function() {
-    let response = await fetch(urlapi, {
-        method: "GET",
-    });
-
+const getDataGraph = async function(days) {
+    let urlapi = `/graphdata/${coinname}, ${days}`;
+    let response = await fetch(urlapi);
     let dataproc = await response.json();
     for (let i = 0; i < dataproc.prices.length; i++) {
         xtime.push(dataproc.prices[i][0]);
@@ -202,10 +207,10 @@ const formatData = data => {
         })
     }
     //creates the graph;
-const drawGraph = async function(divg) {
+const drawGraph = async function(divg, number) {
     xtime = [];
     yprice = [];
-    await getDataGraph();
+    await getDataGraph(number);
     divg.empty();
     let CanvasElement = $('<canvas/>', { 'width': 400, 'height': 400, 'id': 'mychart' });
     const ctx = CanvasElement.get(0).getContext("2d");;
