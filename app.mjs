@@ -1,7 +1,8 @@
 import express from 'express';
 import fetch from "node-fetch";
 const app = express();
-app.listen(3000, () => { console.log(3000); });
+const port = process.env.PORT || 3000;
+app.listen(port, () => { console.log(3000); });
 //------------------------------
 app.use(express.static('public'));
 //----------------------------------
